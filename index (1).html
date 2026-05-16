@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ertuğrul — Portfolio</title>
+<meta name="description" content="Kişisel portfolio sitesi." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0e1014;
+  --bg-soft: #15181f;
+  --surface: #1a1e27;
+  --border: #262b36;
+  --text: #e8e6e1;
+  --text-dim: #8a8e98;
+  --accent: #d4ff3a;          /* lime-ish, modern */
+  --accent-soft: #a8cc2e;
+  --warn: #ff6b4a;
+  --radius: 14px;
+  --max: 1100px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Fraunces', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(212,255,58,0.06), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(212,255,58,0.04), transparent 50%);
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  background: rgba(14,16,20,0.7);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+}
+.logo span { color: var(--accent); }
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+}
+
+/* MAIN */
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+section { padding: 6rem 0 4rem; }
+@media (max-width: 640px) {
+  section { padding: 3.5rem 0 2rem; }
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* HERO */
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.hero .lede {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  color: var(--text-dim);
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+.hero-cta {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ABOUT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+.section-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+.about-text p { color: var(--text-dim); margin-bottom: 1rem; font-size: 1.02rem; }
+.about-text strong { color: var(--text); font-weight: 600; }
+
+.stack {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all 0.25s;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+.project-card:hover .repo-name { color: var(--accent); }
+.repo-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+  transition: color 0.2s;
+  word-break: break-word;
+}
+.repo-desc {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+.repo-meta {
+  display: flex;
+  gap: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  align-items: center;
+}
+.lang-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+.loading, .error-msg {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+form { display: flex; flex-direction: column; gap: 1rem; }
+.form-field label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.form-field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: reveal 0.7s ease-out forwards;
+}
+.reveal:nth-child(2) { animation-delay: 0.1s; }
+.reveal:nth-child(3) { animation-delay: 0.2s; }
+.reveal:nth-child(4) { animation-delay: 0.3s; }
+@keyframes reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">ertugrul<span>.</span>dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">hakkımda</a></li>
+      <li><a href="#projects">projeler</a></li>
+      <li><a href="#contact">iletişim</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="reveal">
+      <div class="eyebrow">portfolio · 2026</div>
+    </div>
+    <div class="reveal">
+      <h1>Merhaba, ben <em>Ertuğrul</em>.</h1>
+    </div>
+    <div class="reveal">
+      <p class="lede">
+        Siber güvenlikle ilgilenen, aktif olarak mobil uygulama geliştiren biriyim. Üzerinde çalıştığım projeleri burada paylaşıyorum.
+      </p>
+    </div>
+    <div class="reveal hero-cta">
+      <a href="/cv.pdf" class="btn btn-primary" download>
+        CV indir ↓
+      </a>
+      <a href="#projects" class="btn btn-ghost">Projelerime bak →</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="eyebrow">01 — hakkımda</div>
+    <div class="about-grid">
+      <h2 class="section-title">Güvenlik ve mobil tarafta üretmeyi seven biriyim.</h2>
+      <div class="about-text">
+        <p>
+          <strong>Siber güvenlik</strong> alanında kendimi geliştiriyor, bu alanda öğrendiklerimi pratiğe dökmeye çalışıyorum. CTF challenge'larına katılıyor, güvenlik araçlarını ve saldırı/savunma tekniklerini araştırıyorum.
+        </p>
+        <p>
+          Bunun yanında aktif olarak <strong>mobil uygulama geliştiriyorum</strong>. Hem kendi fikirlerimi hayata geçiriyor hem de yeni teknolojileri uygulamalı şekilde öğrenmeye devam ediyorum.
+        </p>
+        <div class="stack">
+          <span class="tag">Mobile Dev</span>
+          <span class="tag">Cybersecurity</span>
+          <span class="tag">CTF</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="eyebrow">02 — github projeleri</div>
+    <h2 class="section-title">Üzerinde çalıştığım şeyler.</h2>
+    <p style="color: var(--text-dim); margin-bottom: 2rem; max-width: 540px;">
+      Public repolarım GitHub API üzerinden otomatik olarak çekiliyor.
+    </p>
+    <div class="projects-grid" id="projects-grid">
+      <div class="loading">// repolar yükleniyor...</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="eyebrow">03 — iletişim</div>
+    <div class="contact-grid">
+      <div>
+        <h2 class="section-title">Birlikte çalışalım mı?</h2>
+        <p style="color: var(--text-dim);">
+          Bir proje fikrin, iş teklifin ya da sadece sohbet etmek için bana yazabilirsin. En kısa sürede dönüş yaparım.
+        </p>
+        <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem;">
+          <a href="https://github.com/Pazxer5" class="mono" style="color: var(--text-dim); text-decoration: none; font-size: 0.9rem;">→ github.com/Pazxer5</a>
+        </div>
+      </div>
+
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <p style="display:none;"><label>Boş bırak: <input name="bot-field" /></label></p>
+
+        <div class="form-field">
+          <label for="name">İsim</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-field">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-field">
+          <label for="message">Mesaj</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self: flex-start;">
+          Gönder →
+        </button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 · ertrlpkdmr.me · with care.
+</footer>
+
+<script>
+// GitHub repos çek
+const GITHUB_USER = 'Pazxer5';
+const grid = document.getElementById('projects-grid');
+
+fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=100`)
+  .then(r => {
+    if (!r.ok) throw new Error('GitHub API hatası');
+    return r.json();
+  })
+  .then(repos => {
+    // Forklanmış olanları çıkar, fork olmayanları al (zaten public döner)
+    const publicRepos = repos.filter(r => !r.fork);
+
+    if (publicRepos.length === 0) {
+      grid.innerHTML = '<div class="loading">// henüz public repo yok</div>';
+      return;
+    }
+
+    grid.innerHTML = publicRepos.map(repo => `
+      <a href="${repo.html_url}" target="_blank" rel="noopener" class="project-card">
+        <div class="repo-name">${repo.name}</div>
+        <div class="repo-desc">${repo.description || '(açıklama yok)'}</div>
+        <div class="repo-meta">
+          ${repo.language ? `<span><span class="lang-dot"></span>${repo.language}</span>` : ''}
+          <span>★ ${repo.stargazers_count}</span>
+          <span>⑂ ${repo.forks_count}</span>
+        </div>
+      </a>
+    `).join('');
+  })
+  .catch(err => {
+    grid.innerHTML = `<div class="error-msg">// repolar yüklenemedi: ${err.message}</div>`;
+  });
+</script>
+
+</body>
+</html>
